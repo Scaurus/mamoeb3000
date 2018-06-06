@@ -1,20 +1,22 @@
 package main
 
 import (
-	"log"
 	"encoding/json"
-	"math/rand"
+	"flag"
 	"gopkg.in/telegram-bot-api.v4"
 	"io/ioutil"
-	"flag"
+	"log"
+	"math/rand"
 )
 
-type templates struct {
+type Templates struct {
 	Curses `json:"curses"`
 }
 type Curses []string
 
 var data []byte
+var templates Templates
+var cursesSize int
 
 func init() {
 	fileData, err := ioutil.ReadFile("templates.json")
@@ -22,6 +24,10 @@ func init() {
 		log.Fatalln(err)
 	}
 	data = fileData
+	if err := json.Unmarshal(data, &templates); err != nil {
+		panic(err)
+	}
+	cursesSize = len(templates.Curses)
 }
 
 func main() {
@@ -72,11 +78,6 @@ func main() {
 }
 
 func getRandomCurse() string {
-	var templates templates
-	if err := json.Unmarshal(data, &templates); err != nil {
-		panic(err)
-	}
-	cursesSize := len(templates.Curses)
 	curse := templates.Curses[rand.Intn(cursesSize)]
 	return curse
 }

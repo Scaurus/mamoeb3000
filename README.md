@@ -1,3 +1,6 @@
 # mamoeb3000
-`docker build --build-arg token=yourTlegramTokenBotHereBlyat -t mamoeb .`
+Simple Telegram bot
+
+`docker build --build-arg token=yourTelegramTokenBotHereBlyat -t mamoeb .`
+
 `docker run -d --name mamoebbot --rm mamoeb`
